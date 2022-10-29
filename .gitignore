@@ -1,3 +1,2 @@
-*hotel-directories-ORI.sqlite3
-*hotels.csv
-*rooms.csv
+*.sqlite3
+*.csv
