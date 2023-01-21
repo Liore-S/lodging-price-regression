@@ -1,5 +1,6 @@
 # install dependencies
 import pip
+pip.main(["install", "--upgrade", "pip"])
 pip.main(['install', 'xgboost'])
 
 # import variable from data-processing.py
