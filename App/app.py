@@ -1,3 +1,7 @@
+# install dependencies
+import pip
+pip.main(['install', 'xgboost'])
+
 # import variable from data-processing.py
 import streamlit as st
 import pandas as pd
