@@ -1,10 +1,3 @@
-# install dependencies
-import pip
-import subprocess
-
-subprocess.run(["python", "-m", "pip", "install", "--upgrade", "pip"])
-pip.main(['install', 'xgboost'])
-
 # import variable from data-processing.py
 import streamlit as st
 import pandas as pd
