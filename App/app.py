@@ -1,6 +1,8 @@
 # install dependencies
 import pip
-pip.main(["install", "--upgrade", "pip"])
+import subprocess
+
+subprocess.run(["python", "-m", "pip", "install", "--upgrade", "pip"])
 pip.main(['install', 'xgboost'])
 
 # import variable from data-processing.py
