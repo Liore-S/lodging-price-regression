@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import pickle
 
+st.set_page_config(page_title="Bali Lodging Prediction", page_icon="🛏️")
+
 # Load Variable
 hotelFacilities = pickle.load(open('Notebook/Variable/hotelFacilities.pkl', 'rb'))
 roomFacilities = pickle.load(open('Notebook/Variable/roomFacilities.pkl', 'rb'))
@@ -27,11 +29,11 @@ cityList.sort()
 # Collects user input features into dataframe
 def user_input_features():
    type = st.sidebar.selectbox('Lodging Type', ('Hotel', 'Resor', 'Apartemen', 'Vila', 'Guest House', 'Homestay',
-      'B&B', 'Hostel', 'Camping', 'Lainnya', 'Hotel Kapsul'), 0)
+      'B&B', 'Hostel', 'Camping', 'Hotel Kapsul','Lainnya'), 0)
    city = st.sidebar.selectbox('City', ('Badung', 'Denpasar', 'Gianyar', 'Sanur', 'Bangli', 'Buleleng',
-      'Klungkung', 'Tabanan', 'Jembrana', 'Karangasem'), 0)
+      'Klungkung', 'Tabanan', 'Jembrana', 'Karangasem', 'Other City'), 0)
    starRating = st.sidebar.slider('Star Rating', 1, 5, 3)
-   size = st.sidebar.slider('Room Size (m2)', 2.0, 90.0, 30.0, 0.1,format='%0.1f')
+   size = st.sidebar.slider('Room Size (m2)', 2.0, 90.0, 45.0, 0.1,format='%0.1f')
    occupancy = st.sidebar.slider('Occupancy', 1, 3, 2)
    childOccupancy = st.sidebar.slider('Child Occupancy', 0, 5, 3)
    childAge = st.sidebar.slider('Child Age', 0, 17, 9)
@@ -82,15 +84,17 @@ def create_df(dfOri, df_name, df, prefix):
          df.loc[0, column_name] = 0
     return df
 
+# Title
+st.title('Bali Lodging Price Estimator')
+st.write('This is a web app to estimate the price of lodging in Bali')
+st.write('For more info about this project, please visit my [**Github**](https://github.com/Liore-S/lodging-price-regression/) or open **About** section in the sidebar')
+
 # Sidebar
 st.sidebar.header('User Input Features')
 df = user_input_features()
 
-# Title
-st.title('Bali Lodging Price Estimator')
-st.write('This is a web app to estimate the price of lodging in Bali')
-
 # Main Panel
+st.header('User Input features')
 st.write(df)
 
 # create empty dataframe for hotelFacilities, roomFacilities, nearestPoint, with column name from hotelFacilities, roomFacilities, nearestPoint
@@ -108,10 +112,8 @@ create_df(df, 'type', typeEncode, 'Type_')
 
 df = df.drop(['city', 'type', 'hotelFacilities', 'roomFacilities', 'nearestPoint'], axis=1)
 df = pd.concat([df, cityEncode,  typeEncode, roomFacilities_df, hotelFacilities_df, nearestPoint_df], axis=1)
-st.write(df)
 
 # change all column data type to unit8 except the first column
-# keep the first column as float64
 df = df.astype({col: 'float64' for col in df.columns[:1]})
 df = df.astype({col: 'uint8' for col in df.columns[1:]})
 
@@ -121,6 +123,7 @@ if (df.columns.tolist() == colOri).all():pass
 else:st.warning('The order of the columns is not the same as the model')
 
 # Predict Button
+st.write('Press button below to predict :')
 if st.button('Predict'):
    prediction = model.predict(df)
    # Formatting the prediction
@@ -128,5 +131,5 @@ if st.button('Predict'):
    prediction = float(prediction[0])
    formatted_prediction = formaString.format(prediction)
    # print the prediction
+   st.subheader('Prediction')
    st.metric('Price (IDR)', formatted_prediction)
-   # st.write(int(prediction))
