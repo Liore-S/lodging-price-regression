@@ -2,8 +2,12 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import time
 
-st.set_page_config(page_title="Bali Lodging Prediction", page_icon="🛏️")
+st.set_page_config(
+   page_title="Bali Lodging Prediction", 
+   page_icon="https://cdn.icon-icons.com/icons2/1363/PNG/512/travel-holiday-vacation-327_89074.png"
+)
 
 # Load Variable
 hotelFacilities = pickle.load(open('Notebook/Variable/hotelFacilities.pkl', 'rb'))
@@ -125,11 +129,26 @@ else:st.warning('The order of the columns is not the same as the model')
 # Predict Button
 st.write('Press button below to predict :')
 if st.button('Predict'):
-   prediction = model.predict(df)
+   bar = st.progress(0)
+   status_text = st.empty()
+   for i in range(1,101):
+      status_text.text("%i%% Complete" % i)
+      bar.progress(i)
+      time.sleep(0.01)
+
    # Formatting the prediction
+   prediction = model.predict(df)
    formaString = "Rp{:,.2f}"
    prediction = float(prediction[0])
    formatted_prediction = formaString.format(prediction)
+   prediction = model.predict(df)
+   time.sleep(0.08)
+
    # print the prediction
    st.subheader('Prediction')
    st.metric('Price (IDR)', formatted_prediction)
+
+   # empty the progress bar and status text
+   time.sleep(0.08)
+   bar.empty()
+   status_text.empty()

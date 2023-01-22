@@ -6,7 +6,7 @@ import requests
 # Page Config
 st.set_page_config(
     page_title="Bali Lodging Prediction", 
-    page_icon="📊"
+    page_icon="https://cdn.icon-icons.com/icons2/1363/PNG/512/travel-holiday-vacation-327_89074.png"
 )
 
 # Page Title
