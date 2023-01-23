@@ -11,7 +11,7 @@ st.set_page_config(
 
 # Page Title
 st.title("About This App")
-st.write("This app is created to predict the price of lodging in Bali. The data used in this app is obtained from [**Traveloka.com**](https://www.traveloka.com/). The data is collected in 29 September 2022 with **7.200 data**. Features that are used in this app are: **Star Rating**, **City**, **Type**, **Hotel Facilities**, **Room Facilities**, and **Nearest Point of Interest**.") 
+st.write("This app is created to predict the price of lodging in Bali. The data used in this app is obtained from [**Traveloka.com**](https://www.traveloka.com/). The data is collected in 29 September 2022 with **7.200 data**. Features that are used in this app are: **Star Rating**, **City**, **Type**, **Hotel Facilities**, **Room Facilities**, and **Nearest Point of Interest**. Target Feature that used in this model is lodging price without **Tax** and **Service Fee**.") 
 
 # XGBoost Regressor
 st.subheader("XGBoost Regressor")
