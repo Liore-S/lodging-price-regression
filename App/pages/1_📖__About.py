@@ -35,11 +35,30 @@ st.write('''
     ''')
 predictionPlotURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/grid_prediction.png?raw=true'
 predictionPlot = Image.open(requests.get(predictionPlotURL, stream=True).raw)
-st.image(predictionPlot, caption='Prediction Plot', width=400)
+st.image(predictionPlot, caption='Prediction Plot', use_column_width=True)
 
 # Feature Importance
 st.subheader("Feature Importance")
 st.write('The feature importance is as follows:')
 featureImportanceURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/feature_importance.png?raw=true'
+featureImportanceGainURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/feature_importance_gain.png?raw=true'
 featureImportance = Image.open(requests.get(featureImportanceURL, stream=True).raw)
-st.image(featureImportance, caption='Feature Importance', width=550)
+featureImportanceGain = Image.open(requests.get(featureImportanceGainURL, stream=True).raw)
+st.write('Feature Importance')
+st.image(featureImportance, caption='Feature Importance', use_column_width=True)
+st.write('Feature Importance using Gain')
+st.image(featureImportanceGain, caption='Feature Importance Gain', use_column_width=True)
+
+# Tree Visualization
+import pickle
+import xgboost as xgb
+from xgboost import to_graphviz
+# Subheader
+st.subheader("Tree Visualization")
+st.write('The tree visualization is as follows:')
+st.write('Click on the maximize button to see the tree visualization in full screen.')
+# Load Model
+model = pickle.load(open('./Model/bestModel.pkl', 'rb'))
+# Tree Visualization
+graphviz = xgb.to_graphviz(model, num_trees=model.best_iteration)
+st.graphviz_chart(graphviz.source, use_container_width=False)
