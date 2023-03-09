@@ -16,9 +16,13 @@ nearestPoint = pickle.load(open('Notebook/Variable/nearestPointOfInterests.pkl',
 colOri = pickle.load(open('Notebook/Variable/col.pkl', 'rb'))
 
 # change hotelFacilities, roomFacilities, nearestPoint to list and delete the first element
-hotelFacilities = list(hotelFacilities)[1:]
-roomFacilities = list(roomFacilities)[1:]
-nearestPoint = list(nearestPoint)[1:]
+hotelFacilities = list(hotelFacilities)
+roomFacilities = list(roomFacilities)
+nearestPoint = list(nearestPoint)
+# sort the list
+sort_hotelFacilities = sorted(hotelFacilities)
+sort_roomFacilities = sorted(roomFacilities)
+sort_nearestPoint = sorted(nearestPoint)
 
 # Load Model
 model = pickle.load(open('./Model/bestModel.pkl', 'rb'))
@@ -33,9 +37,9 @@ cityList.sort()
 # Collects user input features into dataframe
 def user_input_features():
    type = st.sidebar.selectbox('Lodging Type', ('Hotel', 'Resor', 'Apartemen', 'Vila', 'Guest House', 'Homestay',
-      'B&B', 'Hostel', 'Camping', 'Hotel Kapsul','Lainnya'), 0)
+      'B&B', 'Hostel', 'Camping', 'Hotel Kapsul'), 0)
    city = st.sidebar.selectbox('City', ('Badung', 'Denpasar', 'Gianyar', 'Sanur', 'Bangli', 'Buleleng',
-      'Klungkung', 'Tabanan', 'Jembrana', 'Karangasem', 'Other City'), 0)
+      'Klungkung', 'Tabanan', 'Jembrana', 'Karangasem'), 0)
    starRating = st.sidebar.slider('Star Rating', 1, 5, 3)
    size = st.sidebar.slider('Room Size (m2)', 2.0, 90.0, 45.0, 0.1,format='%0.1f')
    occupancy = st.sidebar.slider('Occupancy', 1, 3, 2)
@@ -45,10 +49,10 @@ def user_input_features():
    wifi = st.sidebar.checkbox('Wifi Included')
    refund = st.sidebar.checkbox('Free Cancellation / Refund')
    livingRoom = st.sidebar.checkbox('Living Room')
-   hotelFacilitie = st.sidebar.multiselect('Hotel Facilities', (hotelFacilities))
-   roomFacilitie = st.sidebar.multiselect('Room Facilities', (roomFacilities))
-   pointInterest = st.sidebar.multiselect('Point of Interest', (nearestPoint))
-   
+   hotelFacilitie = st.sidebar.multiselect('Hotel Facilities', (sort_hotelFacilities))
+   roomFacilitie = st.sidebar.multiselect('Room Facilities', (sort_roomFacilities))
+   pointInterest = st.sidebar.multiselect('Point of Interest', (sort_nearestPoint))
+
    # Handle Checkbox
    breakfast = 1 if breakfast else 0
    wifi = 1 if wifi else 0
