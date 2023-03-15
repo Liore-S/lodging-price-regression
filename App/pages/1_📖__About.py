@@ -17,12 +17,12 @@ st.write("This app is created to predict the price of lodging in Bali. The data 
 st.subheader("XGBoost Regressor")
 st.write('Model used are XGBoost Regressor with the following parameters:')
 st.write(''' 
-    - colsample_bytree = 1
+    - colsample_bytree = 0.7
     - learning_rate = 0.1
     - max_depth = 13
-    - min_child_weight = 9
-    - reg_alpha = 9
-    - reg_lambda = 4
+    - min_child_weight = 8
+    - reg_alpha = 0
+    - reg_lambda = 1
     - subsample = 0.5
     ''')
 
@@ -30,24 +30,26 @@ st.write('''
 st.subheader("Model Evaluation")
 st.write('The model is evaluated using RMSE and R2 Score. The result is as follows:')
 st.write('''
-    - **RMSE** = 497.645
-    - **R2 Score** = 0.842
+    - **RMSE** = 448.558
+    - **R2 Score** = 0.871
     ''')
-predictionPlotURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/grid_prediction.png?raw=true'
-predictionPlot = Image.open(requests.get(predictionPlotURL, stream=True).raw)
-st.image(predictionPlot, caption='Prediction Plot', use_column_width=True)
+predictionPlotURL = 'Picture/grid_prediction.png'
+predictionPlotColorURL = 'Picture/grid_prediction_color.png'
+# predictionPlot = Image.open(requests.get(predictionPlotURL, stream=True).raw)
+# st.image(predictionPlotURL, caption='Prediction Plot', use_column_width=True)
+st.image(predictionPlotColorURL, caption='Prediction Plot Color Coded', use_column_width=True)
 
 # Feature Importance
 st.subheader("Feature Importance")
 st.write('The feature importance is as follows:')
-featureImportanceURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/feature_importance.png?raw=true'
-featureImportanceGainURL = 'https://github.com/Liore-S/lodging-price-regression/blob/main/Picture/feature_importance_gain.png?raw=true'
-featureImportance = Image.open(requests.get(featureImportanceURL, stream=True).raw)
-featureImportanceGain = Image.open(requests.get(featureImportanceGainURL, stream=True).raw)
+featureImportanceURL = 'Picture/feature_importance.png'
+featureImportanceGainURL = 'Picture/feature_importance_gain.png'
+# featureImportance = Image.open(requests.get(featureImportanceURL, stream=True).raw)
+# featureImportanceGain = Image.open(requests.get(featureImportanceGainURL, stream=True).raw)
 st.write('Feature Importance')
-st.image(featureImportance, caption='Feature Importance', use_column_width=True)
+st.image(featureImportanceURL, caption='Feature Importance', use_column_width=True)
 st.write('Feature Importance using Gain')
-st.image(featureImportanceGain, caption='Feature Importance Gain', use_column_width=True)
+st.image(featureImportanceGainURL, caption='Feature Importance Gain', use_column_width=True)
 
 # Tree Visualization
 import pickle
@@ -60,5 +62,5 @@ st.write('Click on the maximize button to see the tree visualization in full scr
 # Load Model
 model = pickle.load(open('./Model/bestModel.pkl', 'rb'))
 # Tree Visualization
-graphviz = xgb.to_graphviz(model, num_trees=model.best_iteration)
+graphviz = to_graphviz(model, num_trees=model.best_iteration)
 st.graphviz_chart(graphviz.source, use_container_width=False)

@@ -40,7 +40,7 @@ def user_input_features():
       'B&B', 'Hostel', 'Camping', 'Hotel Kapsul'), 0)
    city = st.sidebar.selectbox('City', ('Badung', 'Denpasar', 'Gianyar', 'Sanur', 'Bangli', 'Buleleng',
       'Klungkung', 'Tabanan', 'Jembrana', 'Karangasem'), 0)
-   starRating = st.sidebar.slider('Star Rating', 1, 5, 3)
+   starRating = st.sidebar.slider('Star Rating', 0, 5, 3)
    size = st.sidebar.slider('Room Size (m2)', 2.0, 90.0, 45.0, 0.1,format='%0.1f')
    occupancy = st.sidebar.slider('Occupancy', 1, 3, 2)
    childOccupancy = st.sidebar.slider('Child Occupancy', 0, 5, 3)
