@@ -1,6 +1,6 @@
 # Bali Lodging Price Estimator
 
-XGBoost Regression model that estimate lodging price in Bali using tha hotel facilities, room facilities, and nearest point of interest.
+XGBoost Regression model that estimate lodging price in Bali using hotel facilities, room facilities, and nearest point of interest.
 
 Goal is to help entrepreneur to estimate their rental property cost per-night. Data that used in this model is collected from [Traveloka](https://www.traveloka.com).
 
